@@ -1,30 +1,28 @@
 import "./App.css";
-
-import Banner from "./components/Banner";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Nav from "./components/Nav";
-import Rows from "./components/Rows";
 import store from "./store";
 import { Provider } from "react-redux";
-import LoginScreen from "./components/LoginScreen";
+import Home from "./components/Home";
 
 function App() {
-  const user = null;
   return (
     <Provider store={store}>
       <div className="App">
-        <Router>
-          {!user ? (
-            <LoginScreen />
-          ) : (
-            <Switch>
-              <Nav />
-              <Banner />
-              <Rows />
-            </Switch>
-          )}
-        </Router>
+        <Home />
       </div>
+      <Switch>
+              <Route path="/profile">
+                <ProfileScreen />
+              </Route>
+              <Route path="/login">
+                <SignUpScreen />
+              </Route>
+              <Route path="/signup">
+                <SignUp />
+              </Route>
+              <Route path="/main">
+                <Home/>
+              </Route>
+            </Switch>
     </Provider>
   );
 }

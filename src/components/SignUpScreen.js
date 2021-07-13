@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "../actions/auth";
 import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 function SignUpScreen({ login, isAuthenticated }) {
   const [formData, setFormData] = useState({
     email: "",
@@ -28,9 +29,7 @@ function SignUpScreen({ login, isAuthenticated }) {
   const signIN = (e) => {
     e.preventDefault();
   };
-  if (isAuthenticated) {
-    return <Redirect to="/" />;
-  }
+
   return (
     <div className="signupScreen">
       <form onSubmit={(e) => onSubmit(e)} method="POST">
@@ -52,7 +51,9 @@ function SignUpScreen({ login, isAuthenticated }) {
       </form>
       <h4>
         <span className="signupScreen_grey">New to Netflix?</span>
-        <span className="signupScreen_link"> Sign Up now.</span>
+        <Link to="/signup">
+          <span className="signupScreen_link"> Sign Up now.</span>
+        </Link>
       </h4>
     </div>
   );
