@@ -14,12 +14,14 @@
   background-color: #111;
 }
 .nav_logo {
+  cursor: pointer;
   position: fixed;
   left: 20px;
   width: 80px;
   object-fit: contain;
 }
 .nav_avatar {
+  cursor: pointer;
   position: fixed;
   right: 20px;
   width: 30px;

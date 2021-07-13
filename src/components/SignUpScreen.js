@@ -2,10 +2,10 @@ import React, { useRef, useState } from "react";
 import "./SignUpScreen.css";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { login } from "../actions/auth";
+import { login, signup } from "../actions/auth";
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
-function SignUpScreen({ login, isAuthenticated }) {
+function SignUpScreen({ login, isAuthenticated, signup }) {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -19,20 +19,22 @@ function SignUpScreen({ login, isAuthenticated }) {
       [e.target.name]: e.target.value,
     });
   };
-  const onSubmit = (e) => {
+  /* const onSubmit = (e) => {
     e.preventDefault();
     login(email, password);
-  };
-  const register = (e) => {
+  }; */
+  const registeration = (e) => {
     e.preventDefault();
+    signup(email, password);
   };
-  const signIN = (e) => {
+  const signIn = (e) => {
     e.preventDefault();
+    login(email, password);
   };
 
   return (
     <div className="signupScreen">
-      <form onSubmit={(e) => onSubmit(e)} method="POST">
+      <form method="POST">
         <h1>Sign In</h1>
         <input
           placeholder="Email"
@@ -47,19 +49,24 @@ function SignUpScreen({ login, isAuthenticated }) {
           onChange={(e) => onChange(e)}
           required
         />
-        <button type="submit">Sign In</button>
+        <button type="submit" onClick={signIn}>
+          Sign In
+        </button>
       </form>
       <h4>
         <span className="signupScreen_grey">New to Netflix?</span>
-        <Link to="/signup">
-          <span className="signupScreen_link"> Sign Up now.</span>
-        </Link>
+
+        <span className="signupScreen_link" onClick={registeration}>
+          {" "}
+          Sign Up now.
+        </span>
       </h4>
     </div>
   );
 }
 SignUpScreen.propTypes = {
   login: PropTypes.func.isRequired,
+  signup: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
 };
 
@@ -67,4 +74,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { login })(SignUpScreen);
+export default connect(mapStateToProps, { login, signup })(SignUpScreen);

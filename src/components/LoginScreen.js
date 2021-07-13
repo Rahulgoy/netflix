@@ -11,7 +11,9 @@ const LoginScreen = () => {
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/1920px-Netflix_2015_logo.svg.png"
           alt="NETFLIX_LOGO"
         />
-        <button className="loginScreen_button">Sign In</button>
+        <button onClick={() => setSignIn(true)} className="loginScreen_button">
+          Sign In
+        </button>
         <div className="loginScreen_gradient" />
       </div>
       <div className="loginScreen_body">
@@ -27,7 +29,7 @@ const LoginScreen = () => {
             </h3>
             <div className="loginScreen_input">
               <form>
-                <input type="email" placeholder="Email Address" />
+                <input type="email" placeholder="Email Address" required />
                 <button
                   onClick={() => setSignIn(true)}
                   className="loginScreen_getStarted"

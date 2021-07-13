@@ -5,4 +5,4 @@ from .models import UserAccount
 
 @admin.register(UserAccount)
 class UserAccountAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'email']
+    list_display = ['id', 'email']

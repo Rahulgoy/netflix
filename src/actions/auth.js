@@ -122,45 +122,43 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-export const signup =
-  (name, email, password, re_password) => async (dispatch) => {
-    const config = {
-      headers: {
-        "X-CSRFToken": "csrftoken",
-        "Content-Type": "application/json",
-      },
-    };
-
-    const body = JSON.stringify({
-      name,
-      email,
-      password,
-      re_password,
-    });
-
-    try {
-      const res = await axios
-        .post(`${URL}/auth/users/`, body, config)
-        .catch((err) => {
-          console.log(err.response);
-          dispatch({
-            type: SIGNUP_FAIL,
-            payload: err.response.data,
-          });
-        });
-
-      dispatch({
-        type: SIGNUP_SUCCESS,
-        payload: res.data,
-      });
-    } catch (err) {
-      console.log(err);
-      dispatch({
-        type: SIGNUP_FAIL,
-        payload: err,
-      });
-    }
+export const signup = (email, password) => async (dispatch) => {
+  const config = {
+    headers: {
+      "X-CSRFToken": "csrftoken",
+      "Content-Type": "application/json",
+    },
   };
+
+  const body = JSON.stringify({
+    email,
+    password,
+  });
+
+  try {
+    const res = await axios
+      .post(`${URL}/auth/users/`, body, config)
+      .catch((err) => {
+        console.log(err.response);
+        dispatch({
+          type: SIGNUP_FAIL,
+          payload: err.response.data,
+        });
+      });
+
+    dispatch({
+      type: SIGNUP_SUCCESS,
+      payload: res.data,
+    });
+    dispatch(login(email, password));
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: SIGNUP_FAIL,
+      payload: err,
+    });
+  }
+};
 
 export const logout = () => (dispatch) => {
   dispatch({

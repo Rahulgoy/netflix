@@ -1,38 +1,32 @@
 import React, { useEffect } from "react";
-import Nav from "./Nav";
 import Rows from "./Rows";
 import LoginScreen from "./LoginScreen";
-import Banner from "./Banner";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ProfileScreen from "./ProfileScreen";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { checkAuthenticated } from "../actions/auth";
-import SignUpScreen from "./SignUpScreen";
-import SignUp from "./SignUp";
-function Home({ isAuthenticated, auth, checkAuthenticated }) {
+import { checkAuthenticated, load_user } from "../actions/auth";
+
+function Home({ isAuthenticated, auth, checkAuthenticated, load_user }) {
+  const user = auth.user;
   useEffect(() => {
-    // checkAuthenticated();
+    checkAuthenticated();
+    load_user();
   }, []);
   return (
     <>
       <Router>
-        {!isAuthenticated ? (
+        {!(isAuthenticated && user) ? (
           <LoginScreen />
         ) : (
-          <>
-            <Switch>
-              <Route path="/profile">
-                <ProfileScreen />
-              </Route>
-              <Route path="/login">
-                <SignUpScreen />
-              </Route>
-              <Route path="/signup">
-                <SignUp />
-              </Route>
-            </Switch>
-          </>
+          <Switch>
+            <Route exact path="/">
+              <Rows />
+            </Route>
+            <Route path="/profile">
+              <ProfileScreen />
+            </Route>
+          </Switch>
         )}
       </Router>
     </>
@@ -43,5 +37,8 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
   isAuthenticated: state.auth.isAuthenticated,
   checkAuthenticated: PropTypes.func.isRequired,
+  load_user: PropTypes.func.isRequired,
 });
-export default connect(mapStateToProps, { checkAuthenticated })(Home);
+export default connect(mapStateToProps, { checkAuthenticated, load_user })(
+  Home
+);
